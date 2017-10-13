@@ -1,0 +1,213 @@
+
+header{
+    background-color:#e3e4e5;
+    height:31px;
+    line-height:31px;
+}
+#headerBar{
+    width:1210px;
+    margin:0 auto;
+}
+#headerL{
+    float:left;
+}
+#headerR{
+    float:right;
+}
+#headerR #headerNav{
+    list-style:none;
+}
+#headerNavUl li{
+    float:left;
+    padding-left:15px;
+    padding-right:20px;
+    position:relative;
+}
+#headerR #headerNavUl li:not(:last-child){
+    border-right:1px solid #cccccc;
+}
+#headerR #headerNavUl a{
+    cursor:pointer;
+}
+#headerL{
+    position:relative;
+    padding:0 25px 0 10px;
+}
+#headerBar i{
+    position:absolute;
+    overflow:hidden;
+    width:15px;
+    height:7px;
+    right:3px;
+    top:12px;
+}
+#headerBar s{
+    position:absolute;
+    top:-14px;
+}
+#headerNavUl > .tel{
+    padding-left:25px;
+}
+#headerNavUl > li > span{
+    position:absolute;
+    top:5px;
+    left:5px;
+    width:15px;
+    height:20px;
+    background:url("../images/tel.png") no-repeat;
+}
+#headerAd{
+    background-color:#37c2fb;
+}
+#headerAd > .AdBar{
+    width:1210px;
+    height:80px;
+    margin:0 auto;
+    position:relative;
+}
+#headerAd a, i{
+    cursor:pointer;
+}
+#headerAd i{
+    position:absolute;
+    height:20px;
+    width:20px;
+    top:5px;
+    right:5px;
+    background:url("../images/close-banner.png") no-repeat;
+}
+#search{
+    position:relative;
+    margin:0;
+    padding:0px;
+}
+#search > .w{
+    height:140px;
+}
+#search .search-logo{
+    height:140px;
+    width:170px;
+    background:url("../images/logo.v3.jpg") no-repeat;
+    float:left;
+}
+.searchZone{
+    margin-left:170px;
+    height:100%;
+    background-color:#f6f6f6;
+    padding-left:132px;
+    padding-top:25px;
+    position:relative;
+}
+.searchCtr{
+    position:relative;
+    width:580px;
+    height:35px;
+    display:inline;
+}
+.search-text, .search-car{
+    line-height:25px;
+}
+.search-text{
+    width:500px;
+    height:35px;
+    border:1px solid #f10215;
+    padding-left:5px;
+    font-family:Microsoft YaHei, tahoma, arial, Hiragino Sans GB, \\5b8b\4f53, sans-serif;
+    font-size:14px;
+}
+.searchZone .imgRec{
+    position:absolute;
+    top:1px;
+    right:15px;
+    height:15px;
+    width:19px;
+    background:url("../images/sprite-photo-search.png") no-repeat;
+}
+.searchBtn{
+    position:absolute;
+    right:-80px;
+    width:80px;
+    height:37px;
+    line-height:37px;
+    border:none;
+    background-color:#f10215;
+    font-size:14px;
+    color:#fff;
+    text-align:center;
+}
+.searchZone .imgRec:hover, .searchBtn:hover{
+    cursor:pointer;
+}
+.search-car{
+    position:absolute;
+    width:190px;
+    height:35px;
+    top:25px;
+    right:99px;
+    background-color:#ffffff;
+    text-align:center;
+}
+.search-car .carico{
+    position:absolute;
+    width:18px;
+    height:18px;
+    background:url("../images/tel.png") 0 -60px no-repeat;
+    top:12px;
+    left:53px;
+}
+.search-car a{
+    position:absolute;
+    top:5px;
+    left:80px;
+}
+.search-car .tip{
+    position:absolute;
+    color:#ffffff;
+    border-radius:7px;
+    border-color:#f10215;
+    top:5px;
+    right:36px;
+    background-color:#f10215;
+    min-width:12px;
+    line-height:12px;
+}
+
+.search-hotwords{
+    width:580px;
+    height:20px;
+    margin-top:10px;
+    line-height:20px;
+}
+
+.search-hotwords a{
+    margin-right:10px;
+}
+
+#navitems{
+    position:absolute;
+    bottom:0px;
+    left:0px;
+    width:790px;
+    height:40px;
+    padding-left:5px;
+}
+
+#navitems ul{
+    list-style:none;
+}
+
+#navitems li{
+    float:left;
+    line-height:40px;
+    text-align:center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #555;
+    margin-left:35px;
+
+}
+#navitems li:hover{
+    color:red;
+    cursor:pointer;
+}
+

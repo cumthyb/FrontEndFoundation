@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            user-select:none;
+            width:400px;
+            height:40px;
+            margin:150px auto;
+        }
+        #search{
+            height:100%;
+            width:100%;
+            spellcheck:false;
+            text-indent:5px;
+            font-size:25px;
+        }
+        #result{
+            padding:0;
+            margin:0;
+        }
+        #result li{
+            list-style:none;
+            border-left:solid 1px;
+            border-right:solid 1px;
+            padding: 5px;
+        }
+
+        #result li:hover{
+            background-color: #d1d5d3;
+        }
+
+        #result:last-child
+        {
+            border-bottom:solid 1px;
+        }
+
+        /*div.center {*/
+            /*text-align: center;*/
+            /*background: hsl(0, 100%, 97%);*/
+        /*}*/
+        /*div.center img {*/
+            /*width: 33%; height: auto;*/
+        /*}*/
+
+           /*.center {*/
+        /*background: hsl(60, 100%, 97%);*/
+        /*}*/
+        /*.center img {*/
+        /*display: block;*/
+        /*width: 33%;*/
+        /*height: auto;*/
+        /*margin: 0 auto;*/
+        /*}*/
+
+        .center {
+            background: hsl(240, 100%, 97%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .center img {
+            width: 30%; height: auto;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="center">
+        <img src="1.jpg">
+    </div>
+
+    <div>
+        <input type="search" id="search" autocomplete="off"/>
+        <ul id="result">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+
+    </div>
+
+    <script>
+
+        var search=document.getElementById("search");
+
+        search.onmouseup=function(){
+            var item=this.value;
+
+
+
+        }
+
+
+    </script>
+
+</body>
+</html>

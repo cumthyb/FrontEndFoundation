@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+
+        #container{
+            margin:100px 100px;
+            height:800px;
+            width:600px;
+            border:1px solid black;
+            position:fixed;
+        }
+        #example{
+            float:right;
+        }
+        #example p{
+            margin:0 0.25em;
+            padding:0.25em 0;
+        }
+        #div-before,
+        #div-after{
+            background-color:#88d;
+            color:#000;
+        }
+        #div-1{
+            width:400px;
+            background-color:#000;
+            color:#fff;
+
+            /*!*元素相对定位后 原位置所占空间不变 相邻元素不流动*/
+            /*没有脱离文档流*/
+            /*相对定位 相对的坐标是以原位置作为参照的*/
+            /*position:relative;*/
+            /*top:100px;*/
+            /*left:-200px;*/
+
+            /*相对定位的元素 所占位置会被移除 相邻元素会流动过来*/
+            /*元素脱离了文档流*/
+            /*位置参照为其包含块 containing block 是由其最近的 position 为 absolute / relative / fixed 的祖先元素决定的 第一个不为static的元素（元素的默认position属性）。 参照块不一定是其父元素*/
+            /*position:absolute;*/
+            /*top:0px;*/
+            /*left:0px;*/
+        }
+        #div-1-padding{
+            padding:10px;
+            /*overflow:auto;*/
+        }
+        #div-1a{
+            background-color:#d33;
+            color:#fff;
+
+            /*!*float 浮动 脱离文档流 相对于父元素*!*/
+            /*虽然脱离文档流但是还会占据 文档流的文本空间 故文字会环绕float元素*/
+            /*浮动元素会生成一个块级框，而不论它本身是何种元素。*/
+            /*如果不指定宽高 则默认为内容撑起的高度和宽度 效果就是尽可能的窄*/
+            /*设置float后的元素会生成一个块级框 也就可以设置宽高了*/
+            float:left;
+            left:800px;
+            top:500px;
+            width:100px;
+            /*height:300px;*/
+        }
+        #div-1b{
+            background-color:#3d3;
+            color:#fff;
+        }
+        #div-1c{
+            background-color:#33d;
+            color:#fff;
+        }
+    </style>
+
+
+</head>
+<body>
+
+    <div id="container">
+
+        <div id="example">
+            <div id="div-before">
+                <p>id = div-before</p>
+            </div>
+            <div id="div-1">
+                <div id="div-1-padding">
+                    <p>id = div-1</p>
+                    <div id="div-1a">
+                        <p>id = div-1a</p>
+                        <p>div-1a 我劝天公重抖擞 不拘一格降人才</p>
+                    </div>
+                    <div id="div-1b">
+                        <p>id = div-1b</p>
+                        <p>div-1b-p2-p2sfsfsfdsdsdggfgdsfsdfsdfsdfsdfsdfsdgfffhghfghdgdgdfhfghfgj</p>
+                    </div>
+                    <div id="div-1c">
+                        <p>id = div-1c</p>
+                    </div>
+                </div>
+            </div>
+            <div id="div-after">
+                <p>id = div-after</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
