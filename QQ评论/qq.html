@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        #box{
+            width:500px;
+            height:130px;
+            background-color:#cccccc;
+            margin:50px auto;
+            border-radius:5px;
+            padding:10px;
+            position:relative;
+        }
+        #box #text{
+            display:block;
+            width:490px;
+            height:70px;
+            border-radius:5px;
+            resize:none;
+        }
+        #box img{
+            width:40px;
+            height:40px;
+            padding:2px;
+            border:1px solid #eee;
+            background-color:red;
+            position:absolute;
+            left:8px;
+            bottom:8px;
+            cursor:pointer;
+        }
+        #box input[type="button"]{
+            position:absolute;
+            right:15px;
+            bottom:15px;
+            background-color:palevioletred;
+            color:white;
+            border-radius:5px;
+            text-align:center;
+            width:100px;
+            height:35px;
+            line-height:35px;
+            font-size:18px;
+        }
+        #comment{
+            width:520px;
+            margin:100px auto;
+        }
+        #comment ul{
+            padding-left:0;
+        }
+        #comment li {
+            width:520px;
+            list-style:none;
+            border-bottom:1px solid darkgrey;
+            position:relative;
+            display:block;
+            margin-top:80px;
+            height:80px;
+            margin-top:20px;
+        }
+        #comment li img{
+            width:40px;
+            height:40px;
+            padding:2px;
+            border:1px solid #eee;
+            background-color:red;
+            position:absolute;
+            left:8px;
+            bottom:8px;
+            cursor:pointer;
+            display:inline;
+        }
+        #comment li #content{
+            position:absolute;
+            left:50px;
+            top:25px;
+            margin-left:20px;
+            font-size:20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <textarea name="" id="text"></textarea> <img src="images/1.jpg" alt=""> <input type="button" value="提交"/>
+    </div>
+
+    <div id="comment">
+        <ul></ul>
+    </div>
+
+    <script>
+        var index = 0;
+        var source = ["images/1.jpg", "images/2.jpg"];
+        var oImg = document.querySelector("img");
+        oImg.onclick = function(){
+            index = (index + 1) % 2;
+            this.src = source[index];
+        }
+
+        var newComment = function(imgSrc, commStr){
+            var newLi = document.createElement("li");
+
+            var newImg = document.createElement("img");
+            newImg.src = imgSrc;
+            var newContent = document.createElement("span");
+            newContent.innerText = commStr;
+            newContent.id = "content";
+            newLi.appendChild(newImg);
+            newLi.appendChild(newContent);
+            return newLi;
+        };
+
+
+        var eBtn = document.getElementsByTagName("input")[0];
+        var eCommentUl = document.getElementsByTagName("ul")[0];
+        eBtn.onclick = function(){
+            var text = document.getElementsByTagName("textarea")[0].value;
+            var eComment = newComment(source[index], text);
+            eCommentUl.appendChild(eComment);
+        }
+
+
+    </script>
+</body>
+</html>
