@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡 图片切换</title>
+    <style>
+        body, div, p, span, img{
+            margin:0;
+            padding:0px;
+        }
+        #box{
+            width:418px;
+            margin:50px auto;
+        }
+        #box #title span{
+            height:30px;
+            width:75px;
+            line-height:30px;
+            margin-right:5px;
+            cursor:pointer;
+            text-align:center;
+            color:white;
+            font-size:12px;
+            display:inline-block;
+            background-color:#000000;
+        }
+        #box #title .on{
+            background-color:#ff6600;
+        }
+        #box #panel{
+            position:relative;
+            width:418px;
+            height:194px;
+            margin-top:20px;
+        }
+        #box #img img{
+            display:none;
+        }
+        #box #img .current{
+            display:block;
+        }
+        #box #info p{
+            position:absolute;
+            width:100%;
+            height:20px;
+            line-height:20px;
+            font-size:12px;
+            text-align:center;
+            color:#fff;
+            background:rgba(0, 0, 0, .7);
+        }
+        #box #info .top{
+            top:-20px;
+        }
+        #box #info .bottom{
+            bottom:-22px;
+        }
+        #box #panel #btn span{
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
+            width:30px;
+            height:30px;
+            line-height:30px;
+            background:rgb(0, 0, 0);
+            background:rgba(0, 0, 0, .7);
+            color:#fff;
+            text-align:center;
+            cursor:pointer;
+        }
+        #btn .left{
+            left:0px;
+        }
+        #btn .right{
+            right:0;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="title">
+            <span class="on">循环切换</span>
+            <span class="">单边切换</span>
+        </div>
+        <div id="panel">
+            <div id="img">
+                <img src="imgs/p1.png" alt="" class="current">
+                <img src="imgs/p2.png" alt="" class="">
+                <img src="imgs/p3.png" alt="" class="">
+                <img src="imgs/p4.png" alt="" class="">
+                <img src="imgs/p5.png" alt="" class="">
+                <img src="imgs/p6.png" alt="" class="">
+            </div>
+            <div id="info">
+                <p class="top">top</p>
+                <p class="bottom">bottom</p>
+            </div>
+            <div id="btn">
+                <span class="left"><</span>
+                <span class="right">></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var oImgs = document.querySelectorAll("#img img");
+        var oTab = document.querySelectorAll("#title span");
+        var oBtnLeft = document.querySelector("#btn .left");
+        var oBtnRight = document.querySelector("#btn .right");
+        var oInfos = document.querySelectorAll("#info p");
+
+        var currImg = 0;
+
+        var loopMoudle = true;
+
+        oBtnRight.onclick = function(){
+            /* oImgs.forEach(function(img){
+             img.className="";
+             },this);*/
+            oImgs[currImg].className = "";
+            if(++currImg === oImgs.length){
+                currImg = loopMoudle ? 0 : --currImg;
+            }
+            oImgs[currImg].className = "current";
+            ChangeInfo(currImg + 1);
+        }
+
+        oBtnLeft.onclick = function(){
+            /* oImgs.forEach(function(img){
+             img.className="";
+             },this);*/
+            oImgs[currImg].className = "";
+            if(--currImg === -1){
+                currImg = loopMoudle ? oImgs.length - 1 : ++currImg;
+            }
+            oImgs[currImg].className = "current";
+            ChangeInfo(currImg + 1);
+        }
+
+        var ChangeInfo = function(imgIndex){
+            oInfos[0].innerText = `${imgIndex}/6`;
+        }
+        ChangeInfo(currImg + 1);
+
+        oTab.forEach(function(tab){
+            tab.onclick = function(){
+                oTab.forEach((t) =>{t.className = "";}, this);
+                this.className = "on";
+            }
+        }, this)
+
+    </script>
+
+</body>
+</html>
