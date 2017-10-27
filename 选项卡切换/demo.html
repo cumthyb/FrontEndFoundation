@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡切换</title>
+    <script src=""></script>
+    <style>
+        body, div, ul, li, span, p, input, img{
+            margin:0;
+            padding:0;
+        }
+        #box{
+            width:426px;
+            height:203px;
+            margin:50px auto;
+        }
+        #tab{
+            width:100px;
+            height:100%;
+            float:left;
+        }
+        #tab li{
+            list-style:none;
+            padding:0;
+            width:100%;
+            height:50px;
+            line-height:50px;
+            text-align:center;
+            background-color:black;
+            color:white;
+            font-family:Microsoft YaHei, serif;
+            font-size:18px;
+            margin-bottom:1px;
+        }
+        #tab .on{
+            background-color:#ff6600;
+        }
+        #content{
+            width:326px;
+            height:100%;
+            float:right;
+            position:relative;
+        }
+        #content .category{
+            display:none;
+        }
+        #content .on{
+            display:block;
+        }
+        #content .category .pic{
+            padding:0px;
+            width:100%;
+            height:203px;
+            list-style:none;
+            display:none;
+        }
+        #content .on .on{
+            display:block;
+        }
+        #content .btn{
+            width:100%;
+            height:35px;
+            line-height:35px;
+            background-color:rgba(0, 0, 0, .5);
+            position:absolute;
+            bottom:0;
+        }
+        #content .btn ul{
+            float:right;
+        }
+        #content .btn li{
+            list-style:none;
+            float:left;
+            margin-left:2px;
+            width:35px;
+            height:100%;
+            background-color:#ddd;
+            line-height:35px;
+            font-family:Microsoft YaHei, serif;
+            font-size:14px;
+            color:white;
+            padding:0;
+            text-align:center;
+        }
+        #content .btn .on{
+            background-color:#ff6600;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="tab">
+            <ul>
+                <li class="on">汽车</li>
+                <li class="">美女</li>
+                <li class="">宠物</li>
+                <li class="">自然</li>
+            </ul>
+        </div>
+        <div id="content">
+            <div class="category">
+                <ul>
+                    <li class="pic on" style="background:url('imgs/c1.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/c2.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/c3.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/c4.jpg') no-repeat"></li>
+                </ul>
+
+                <div class="btn">
+                    <ul>
+                        <li class="on">1</li>
+                        <li class="">2</li>
+                        <li class="">3</li>
+                        <li class="">4</li>
+                    </ul>
+                </div>
+
+
+            </div>
+            <div class="category">
+                <ul>
+                    <li class="pic on" style="background:url('imgs/g1.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/g2.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/g3.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/g4.jpg') no-repeat"></li>
+                </ul>
+
+                <div class="btn">
+                    <ul>
+                        <li class="on">1</li>
+                        <li class="">2</li>
+                        <li class="">3</li>
+                        <li class="">4</li>
+                    </ul>
+                </div>
+
+
+            </div>
+            <div class="category">
+                <ul>
+                    <li class="pic on" style="background:url('imgs/m1.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/m2.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/m3.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/m4.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/m5.jpg') no-repeat"></li>
+                </ul>
+
+                <div class="btn">
+                    <ul>
+                        <li class="on">1</li>
+                        <li class="">2</li>
+                        <li class="">3</li>
+                        <li class="">4</li>
+                        <li class="">5</li>
+                    </ul>
+                </div>
+
+
+            </div>
+            <div class="category on">
+                <ul>
+                    <li class="pic on" style="background:url('imgs/s1.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/s2.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/s3.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/s4.jpg') no-repeat"></li>
+                    <li class="pic " style="background:url('imgs/s5.jpg') no-repeat"></li>
+                </ul>
+
+                <div class="btn">
+                    <ul>
+                        <li class="on">1</li>
+                        <li class="">2</li>
+                        <li class="">3</li>
+                        <li class="">4</li>
+                        <li class="">5</li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var imgOn=[0,0,0,0];
+        var oTab=document.querySelectorAll("#tab li");
+        var oImg=document.querySelectorAll("#content .category");
+
+        oTab.forEach(function(tab,i){
+            let tabIndex=i;
+            tab.onmouseenter=function(){
+                oTab.forEach(function(t){
+                    t.className="";
+                },this);
+                this.className="on";
+
+                oImg.forEach(function(img){
+                    img.className="category"
+                });
+
+                oImg[tabIndex].className+=" on";
+
+                var imgs= oImg[tabIndex].getElementsByClassName("pic");
+ //               imgs[imgOn[tabIndex]].className="pic on";
+
+                let pics=oImg[tabIndex].querySelectorAll(".btn li");
+
+                pics.forEach(function(b,d){
+                    b.onmouseenter=function(){
+
+                        Array.prototype.forEach.call(pics,function(k){
+                            k.className="" ;
+                        });
+
+                        this.className="on";
+
+                        Array.prototype.forEach.call(imgs,function(k){
+                            k.className="pic" ;
+                        });
+
+                        imgs[d].className+=" on";
+
+
+                    }
+
+
+
+                })
+            }
+        },this);
+
+    </script>
+
+</body>
+</html>
