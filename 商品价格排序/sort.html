@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        div, nav, ul, li, img，p{
+            margin:0;
+            padding:0;
+            font-family:Microsoft YaHei, serif;
+        }
+        li{
+            list-style:none;
+            float:left;
+        }
+        #box{
+            width:1000px;
+            margin:50px auto;
+        }
+        #box > #nav{
+            width:100%;
+            height:40px;
+            background-color:#f8f8f8;
+            border:1px solid #ddd;
+        }
+        #nav > li{
+            width:80px;
+            height:40px;
+            line-height:40px;
+            text-align:center;
+            font-size:14px;
+            cursor:pointer;
+            position:relative;
+        }
+        #nav .price > div{
+            position:absolute;
+            top:0;
+            display:none;
+            z-index:99;
+            left:0;
+            width:100px;
+            height:80px;
+            font-size:14px;
+            border:1px solid #ddd;
+            background:#ffffff;
+            line-height:40px;
+        }
+        #nav .price p{
+            margin:0;
+        }
+        #nav .price:hover div{
+            display:block;
+        }
+        #goods > ul{
+            width:100%;
+            margin-top:10px;
+        }
+        #goods li{
+            position:relative;
+            float:left;
+            margin:5px 14px;
+            width:200px;
+            height:230px;
+            padding:10px;
+            border:1px solid #eee;
+            /*background-color: #8888dd;*/
+        }
+        #goods li > img{
+            width:200px;
+        }
+        #goods li > p{
+            margin:0;
+        }
+        #goods li > div{
+            position:absolute;
+            bottom:0;
+            right:0;
+            width:50px;
+            height:50px;
+            background:url(imgs/price.png);
+            text-align:center;
+            line-height:50px;
+            color:#fff318;
+            font-size:14px;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <ul id="nav">
+            <li class="">流行</li>
+            <li class="">热销</li>
+            <li class="">上新</li>
+            <li class="price">
+                <span>价格</span>
+                <div>
+                    <p id="upSort">由低到高</p>
+                    <p id="downSort">由高到低</p>
+                </div>
+            </li>
+        </ul>
+        <ul id="goods">
+            <li>
+                <img src="imgs/xh_img1.jpg" alt="">
+                <p>转朱阁，低绮户，在哪</p>
+                <div>500</div>
+            </li>
+            <li>
+                <img src="imgs/xh_img2.jpg" alt="">
+                <p>转朱阁，低绮户，在哪</p>
+                <div>999.99</div>
+            </li>
+            <li>
+                <img src="imgs/xh_img4.jpg" alt="">
+                <p>转朱阁，低绮户，在哪</p>
+                <div>400</div>
+            </li>
+            <li>
+                <img src="imgs/xh_img3.jpg" alt="">
+                <p>转朱阁，低绮户，在哪</p>
+                <div>800</div>
+            </li>
+            <li>
+                <img src="imgs/xh_img5.jpg" alt="">
+                <p>转朱阁，低绮户，在哪</p>
+                <div>26</div>
+            </li>
+            <li>
+                <img src="imgs/xh_img6.jpg" alt="">
+                <p>转朱阁，低绮户，在哪</p>
+                <div>73</div>
+            </li>
+            <li>
+                <img src="imgs/xh_img7.jpg" alt="">
+                <p>转朱阁，低绮户，在哪</p>
+                <div>99</div>
+            </li>
+            <li>
+                <img src="imgs/xh_img1.jpg" alt="">
+                <p>转朱阁，低绮户，在哪</p>
+                <div>500</div>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        class GoodObj {
+            constructor( goodInfo, price){
+                this.goodInfo = goodInfo;
+                this.price = price;
+            }
+        };
+
+        function CreateGoodObj(eLi){
+            var goodInfo = eLi.innerHTML;
+            var price = eLi.children[2].innerText;
+
+            let good = new GoodObj(goodInfo, price)
+            return good;
+        }
+
+        var upSort=document.querySelector("#upSort");
+        var downSort=document.querySelector("#downSort");
+
+        function UpSort(){
+            Goods.sort(function(a,b){
+                return a.price-b.price;
+            });
+            Rerender();
+        }
+
+        function DownSort(){
+            Goods.sort(function(a,b){
+                return b.price-a.price;
+            });
+            Rerender();
+        }
+
+        function Rerender(){
+            Array.prototype.forEach.call(aGoods,function(good,i){
+                good.innerHTML=Goods[i].goodInfo;
+            });
+        }
+
+        var Goods = [];
+        var aGoods;
+        window.onload = function(){
+            aGoods = document.querySelectorAll("#goods li");
+            (function CreateGoods(){
+                Array.prototype.forEach.call(aGoods, function(good){
+                    Goods.push(CreateGoodObj(good));
+                })
+            })();
+            
+            upSort.onclick=UpSort;
+
+            downSort.onclick=DownSort;
+        }
+
+
+
+    </script>
+
+
+</body>
+</html>
