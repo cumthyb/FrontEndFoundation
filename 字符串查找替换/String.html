@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+
+    <style>
+        #box{
+            width:500px;
+            height:300px;
+            margin:50px auto;
+            border:1px solid black;
+            border-radius:5px;
+            padding:20px 10px;
+        }
+        #box p{
+            text-indent:2em;
+            font-size:18px;
+        }
+
+        #box>p>em{
+            color:red;
+            font-size:22px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div id="box">
+        <input type="text"/><input type="text"/> <input type="button" value="查找"/> <input type="button" value="替换"/>
+        <p>前端开发工程师是Web前端开发工程师的简称，是近五年才真正开始受到重视的一个新兴职业。Web前端开发技术是一个先易后难的过程，主要包括三个要素：HTML（标准通用标记语言下的一个应用）、级联样式表和JavaScript。 好的web要求前端开发工程师不仅要掌握基本的Web前端开发技术，网站性能优化、SEO和服务器端的基础知识，而且要学会运用各种工具进行辅助开发以及理论层面的知识，包括代码的可维护性、组件的易用性、分层语义模板和浏览器分级支持等。</p>
+    </div>
+</body>
+<script>
+    var bFind=document.querySelector("#box input[value='查找']");
+    var bReplace=document.querySelector("#box input[value='替换']");
+
+    var pText=document.getElementsByTagName("p")[0];
+
+
+    bFind.onclick=findStr;
+
+    bReplace.onclick=function(){
+        findStr();
+        var queryStr=document.getElementsByTagName("input")[0].value;
+        var replaceStr=document.getElementsByTagName("input")[1].value;
+        var text=pText.innerHTML;
+
+        var re = new RegExp(queryStr,"g");
+        pText.innerHTML=text.replace(re,replaceStr);
+    }
+
+    function removeEm(str){
+        return str.replace(/<.?em>/g,'');
+    }
+
+    function findStr(){
+        var text=pText.innerHTML;
+
+        text=removeEm(text);
+        var queryStr=document.getElementsByTagName("input")[0].value;
+
+        var re = new RegExp(queryStr,"g");
+
+        pText.innerHTML=text.replace(re,`<em>${queryStr}</em>`);
+    }
+
+</script>
+</html>
