@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        #box>span{
+            float:left;
+            width:90px;
+            height:40px;
+            font-size:16px;
+            color:white;
+            font-weight:bold;
+            line-height:40px;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+    </div>
+
+    <script>
+
+        var color=[0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F'];
+        var count=0;
+        var creater=setInterval(function(){
+            var card=document.createElement("span");
+
+            var colorStr="#";
+            for(var i=0; i<6; i++){
+                colorStr+=color[Math.floor( Math.random()*15)+1];
+            }
+            card.style.backgroundColor=colorStr;
+            card.innerText=colorStr;
+            box.appendChild(card);
+            if((++count)>100){
+                clearInterval(creater);
+            }
+        },500)
+
+
+
+    </script>
+
+
+
+</body>
+</html>
