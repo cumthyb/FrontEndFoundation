@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        #box{
+            width:200px;
+            height:200px;
+            background-color:red;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+       window.requestAnimationFrame=window.requestAnimationFrame||
+                                    function(fn){
+                                        return window.setTimeout(fn);
+                                    };
+       window.cancelAnimationFrame=window.cancelAnimationFrame||window.clearTimeout;
+
+       function getStyle(ele,attr){
+           return ele.currentStyle?ele.currentStyle[attr]:window.getComputedStyle(ele)[attr];
+       }
+
+
+       var box=document.getElementById("box");
+
+       var target=1000,attr="width",speed=10;
+
+
+
+       function fn(obj,target,attr,speed){
+           var current=getStyle(obj,attr);
+           var currentVal=parseFloat(current);
+
+           function loop(){
+               currentVal+=speed;
+               if(currentVal>=target){
+
+                   currentVal=target;
+               }
+
+               else requestAnimationFrame(loop);
+               obj.style[attr]=currentVal+"px";
+           }
+           loop();
+
+       }
+
+
+       fn(box,target,attr,speed);
+
+
+
+    </script>
+</body>
+</html>
