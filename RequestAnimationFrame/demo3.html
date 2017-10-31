@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>同时改变多个属性值</title>
+    <script src=""></script>
+    <style>
+        #box{
+            position:absolute;
+            left:0;
+            top:0;
+            width:200px;
+            height:200px;
+            background-color:red;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        window.requestAnimationFrame = window.requestAnimationFrame ||
+            function(fn){
+                return window.setTimeout(fn);
+            };
+        window.cancelAnimationFrame = window.cancelAnimationFrame || window.clearTimeout;
+
+        function getStyle(ele, attr){
+            return ele.currentStyle ? ele.currentStyle[attr] : window.getComputedStyle(ele)[attr];
+        }
+
+        var box=document.getElementById("box");
+
+        var styles=box.currentStyle||window.getComputedStyle(box);
+
+        var end={
+            width:1000,
+            height:800
+        }
+        var move={};
+
+        for (var key in end) {
+            var pair={}
+            pair["start"]=parseFloat(styles[key]) ;
+            pair["end"]=parseFloat( end[key]);
+            pair["s"]=pair["end"]-pair["start"];
+            move[key]=pair;
+        }
+
+        console.log(move);
+
+        function fn(obj,move,time){
+
+            var startTime=new Date();
+            function loop(){
+
+                var now=new Date();
+                var timeSpan=now-startTime;
+                var currentVal;
+                
+                var roti=timeSpan/time;
+                
+                if(roti>=1){
+                    roti=1;
+                }
+                else {
+                    requestAnimationFrame(loop);
+                }
+                
+                for (var key in move) {
+                    currentVal=roti*move[key]['s']+move[key]['start'];
+                    obj.style[key]=currentVal+"px";
+                    console.log(`${key}:${currentVal}`);
+                }
+
+            }
+            loop();
+
+        }
+
+        fn(box,move,10000);
+
+
+
+    </script>
+
+
+
+</body>
+</html>
