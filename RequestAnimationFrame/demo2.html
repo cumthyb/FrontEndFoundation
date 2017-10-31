@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>时间版运动框架</title>
+    <script src=""></script>
+    <style>
+        #box{
+            width:200px;
+            height:200px;
+            background-color:red;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+
+    <script>
+        window.requestAnimationFrame = window.requestAnimationFrame ||
+            function(fn){
+                return window.setTimeout(fn);
+            };
+        window.cancelAnimationFrame = window.cancelAnimationFrame || window.clearTimeout;
+
+        function getStyle(ele, attr){
+            return ele.currentStyle ? ele.currentStyle[attr] : window.getComputedStyle(ele)[attr];
+        }
+
+
+        var box=document.getElementById("box");
+
+        var target=800,attr="top",time=10000;
+
+        function fn(obj,target,attr,time){
+            var current=getStyle(obj,attr);
+            var currentVal=start=parseFloat(current);
+            var s=target-currentVal;
+
+            var startTime=new Date();
+            function loop(){
+
+                var now=new Date();
+                var timeSpan=now-startTime;
+
+                currentVal=timeSpan/time*s+start;
+                if(currentVal>=target){
+
+                    currentVal=target;
+                }
+
+                else requestAnimationFrame(loop);
+                obj.style[attr]=currentVal+"px";
+            }
+            loop();
+
+        }
+
+        fn(box,target,attr,time);
+
+
+    </script>
+</body>
+</html>
