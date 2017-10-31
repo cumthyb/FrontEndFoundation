@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        #box{
+            margin:50px auto;
+            width:600px;
+            height:61px;
+        }
+        #box li{
+            width:41px;
+            height:61px;
+            list-style:none;
+            padding:0px;
+            float:left;
+            margin-right:5px;
+            line-height:61px;
+            text-align:center;
+        }
+        #box .f0{
+            background:url('images/0.png') no-repeat center;
+        }
+        #box .f1{
+            background:url('images/1.png') no-repeat center;
+        }
+        #box .f2{
+            background:url('images/2.png') no-repeat center;
+        }
+        #box .f3{
+            background:url('images/3.png') no-repeat center;
+        }
+        #box .f4{
+            background:url('images/4.png') no-repeat center;
+        }
+        #box .f5{
+            background:url('images/5.png') no-repeat center;
+        }
+        #box .f6{
+            background:url('images/6.png') no-repeat center;
+        }
+        #box .f7{
+            background:url('images/7.png') no-repeat center;
+        }
+        #box .f8{
+            background:url('images/8.png') no-repeat center;
+        }
+        #box .f9{
+            background:url('images/9.png') no-repeat center;
+        }
+        #box .dot{
+            background:url('images/d.png') no-repeat center;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <ul>
+            <li class="num "></li>
+            <li class="num "></li>
+            <li class="dot "></li>
+            <li class="num "></li>
+            <li class="num "></li>
+            <li class="dot "></li>
+            <li class="num "></li>
+            <li class="num "></li>
+        </ul>
+        <input type="button" value="stop" id="stop"/>
+        <input type="button" value="reset" id="reset"/>
+    </div>
+
+
+
+    <script>
+        var lis=document.querySelectorAll(".num");
+
+        var snytor;
+        function synTime(){
+
+            var time=new Date();
+
+            var h=padZero(time.getHours());
+            var m=padZero(time.getMinutes());
+            var s=padZero(time.getSeconds());
+
+            var timeStr=h+m+s;
+
+            for(var i=0,len=timeStr.length; i<len; i++){
+                lis[i].className="num f"+timeStr.charAt(i);
+            }
+
+            function padZero(num){
+                return num<10?'0'+num:num+"";
+            }
+
+            snytor=requestAnimationFrame(synTime);
+
+        }
+
+        synTime();
+
+        var stop=document.querySelector("#stop");
+        stop.onclick=function(){
+            cancelAnimationFrame(snytor);
+        }
+
+        var reset=document.querySelector("#reset");
+        reset.onclick=function(){
+            synTime();
+        }
+
+
+
+    </script>
+
+</body>
+</html>
