@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+       div,ul,li{
+           margin:0;
+           padding:0
+
+        }
+        #box
+        {
+            margin:50px auto;
+            position:relative;
+            width:660px;
+            height:340px;
+            overflow:hidden;
+        }
+        #box .pics{
+            width:10000%;
+            position:absolute;
+        }
+        #box .pics li{
+            list-style:none;
+            padding: 0px;
+            float:left;
+            width:660px;
+            height:340px;
+            line-height:340px;
+            text-align:center;
+            color:white;
+            font-weight:bold;
+            font-size:200px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <ul class="pics">
+            <li style="background-Color:pink">1</li>
+            <li style="background-Color:red">2</li>
+            <li style="background-Color:blanchedalmond">3</li>
+            <li style="background-Color:green">4</li>
+            <li style="background-Color:navajowhite">5</li>
+            <li style="background-Color:tomato">6</li>
+        </ul>
+    </div>
+
+    <script src="Move.js" type="text/javascript"></script>
+
+    <script>
+        
+        var box=document.getElementById("box");
+        var pics=box.getElementsByClassName("pics")[0];
+        
+        var loop;
+
+        var index=0;
+
+        var end={
+            left:0
+        }
+
+        var target={};
+        for (var key in end) {
+            var pair={}
+            pair["start"]=parseFloat(styles[key]) ;
+            pair["end"]=parseFloat( end[key]);
+            pair["s"]=pair["end"]-pair["start"];
+            if(pair['s']!=0){
+                target[key]=pair;
+            }
+        }
+
+        function movePic(){
+
+            if(index==6){
+                index=0;
+            }
+
+            styles=pics.currentStyle||window.getComputedStyle(pics);
+            for (var key in end) {
+                var pair={}
+                pair["start"]=parseFloat(styles[key]) ;
+                console.log(pair["start"]);
+                pair["end"]=parseFloat( index*660*(-1));
+                pair["s"]=pair["end"]-pair["start"];
+                if(pair['s']!=0){
+                    target[key]=pair;
+                }
+            }
+
+
+            fn(pics,target,1000);
+
+            index++;
+        }
+
+        setInterval(movePic,2000);
+        
+        
+        
+        
+        
+    </script>
+    
+    
+    
+</body>
+</html>
