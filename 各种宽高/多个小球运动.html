@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        body, div{
+            padding:0px;
+            margin:0;
+        }
+        .ball{
+            position:absolute;
+            width:100px;
+            height:100px;
+            border-radius:50%;
+            background-color:green;
+            top:0;
+            left:0;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <script>
+
+        var container = document.getElementsByTagName("body")[0];
+        var ball = document.createElement("div");
+
+        ball.className = "ball";
+
+        var balls = [];
+
+        var getRandomColor = function(){
+
+            return '#' +
+                (function(color){
+                    return (color += '0123456789abcdef'[Math.floor(Math.random() * 16)])
+                    && (color.length == 6) ? color : arguments.callee(color);
+                })('');
+        }
+
+        function init(boxNum){
+            var top, left;
+            var newBall;
+            for(var i = 0; i < boxNum; i++){
+                newBall = ball.cloneNode();
+                newBall.style.left = Math.random() * 800 + "px";
+                newBall.style.top = Math.random() * 800 + "px";
+                newBall.style.backgroundColor = getRandomColor();
+                newBall.className += ` B_${i + 1}`;
+                newBall.speedTop=Math.random()*20;
+                newBall.speedLeft=Math.random()*20;
+                container.appendChild(newBall);
+            }
+        }
+
+        var speedTop = 8;
+        var speedLeft = 8;
+
+        var balls = container.getElementsByTagName("div");
+
+        function autoMove(){
+            [].forEach.call(balls, function(ba){
+
+
+                speedTop=ba.speedTop;
+                speedLeft=ba.speedLeft;
+                var MaxLeft = document.documentElement.clientWidth - ba.clientWidth;
+                var MaxTop = document.documentElement.clientHeight - ba.clientHeight;
+                var top_ori = ba.offsetTop;
+                var left_ori = ba.offsetLeft;
+
+                var target_top = top_ori + speedTop;
+                var target_left = left_ori + speedLeft;
+
+                if(target_top >= MaxTop){
+                    speedTop = speedTop * (-1);
+                    target_top = top_ori + speedTop;
+                    target_top = Math.min(MaxTop, target_top)
+                    ba.style.backgroundColor=getRandomColor();
+
+                }
+                if(target_top <= 0){
+                    speedTop = speedTop * (-1);
+                    target_top = top_ori + speedTop;
+                    target_top = Math.max(0, target_top)
+                    ba.style.backgroundColor=getRandomColor();
+
+                }
+
+                if(target_left >= MaxLeft){
+                    speedLeft = speedLeft * (-1);
+                    target_left = left_ori + speedLeft;
+                    target_left = Math.min(MaxLeft, target_left);
+                    ba.style.backgroundColor=getRandomColor();
+
+                }
+                if(target_left <= 0){
+                    speedLeft = speedLeft * (-1);
+                    target_left = left_ori + speedLeft;
+                    target_left = Math.max(0, target_left)
+                    ba.style.backgroundColor=getRandomColor();
+
+                }
+
+                console.log(ba.className);
+                ba.style.top = target_top + "px";
+
+                ba.style.left = target_left + "px";
+                ba.speedTop=speedTop;
+                ba.speedLeft=speedLeft;
+
+            });
+            requestAnimationFrame(autoMove);
+        }
+
+        init(50);
+
+        autoMove();
+    </script>
+</body>
+</html>

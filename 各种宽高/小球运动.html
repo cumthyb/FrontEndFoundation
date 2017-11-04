@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        body, div{
+            padding:0px;
+            margin:0;
+        }
+        #box{
+            position:absolute;
+            width:100px;
+            height:100px;
+            border-radius:50%;
+            background-color:green;
+            top:0;
+            left:0;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+
+    <script>
+        var ball = document.getElementById("box");
+        var speedTop = 8;
+        var speedLeft = 8;
+
+        var  MaxLeft= document.documentElement.clientWidth - ball.clientWidth;
+        var  MaxTop= document.documentElement.clientHeight - ball.clientHeight;
+
+
+        autoMove();
+
+
+        function autoMove(){
+
+            var top_ori = ball.offsetTop;
+            var left_ori = ball.offsetLeft;
+
+            var target_top = top_ori + speedTop;
+            var target_left = left_ori + speedLeft;
+
+            if(target_top >= MaxTop){
+                speedTop = speedTop * (-1);
+                target_top = top_ori + speedTop;
+                target_top=Math.min(MaxTop,target_top)
+            }
+            if(target_top <= 0){
+                speedTop = speedTop * (-1);
+                target_top = top_ori + speedTop;
+                target_top=Math.max(0,target_top)
+            }
+
+            if(target_left >= MaxLeft){
+                speedLeft = speedLeft * (-1);
+                target_left = left_ori + speedLeft;
+                target_left =Math.min(MaxLeft,target_left) ;
+            }
+            if(target_left <= 0){
+                speedLeft = speedLeft * (-1);
+                target_left = left_ori + speedLeft;
+                target_left = Math.max(0,target_left)
+            }
+
+            ball.style.top = target_top + "px";
+            ball.style.left = target_left + "px";
+            requestAnimationFrame(autoMove);
+        }
+
+
+        window.onResize=function(){
+
+            MaxLeft= document.documentElement.clientWidth - ball.clientWidth;
+            MaxTop= document.documentElement.clientHeight - ball.clientHeight;
+        }
+
+
+    </script>
+
+</body>
+</html>
