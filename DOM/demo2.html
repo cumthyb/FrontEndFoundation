@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        #box{
+            width:1200px;
+            height:600px;
+            display:flex;
+            margin:50px auto;
+        }
+        #box1{
+            flex:1;
+            background-color:#d1d5d3;
+        }
+        #box2{
+            flex:1;
+            background-color:#666666;
+        }
+        ul{
+            overflow:auto;
+        }
+        li{
+            list-style:none;
+            float:left;
+            cursor:pointer;
+            margin-right:20px;
+            color:red;
+            font-size:30px;
+        }
+        #favourite li{
+            border:1px solid grey;
+            color:white;
+            font-size:20px;
+        }
+        #favourite li > span{
+            display:inline-block;
+            border-right:1px solid grey;
+            line-height:100%;
+            padding:2px;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="box1">
+            <ul>
+                <li>三亚</li>
+                <li>北京</li>
+                <li>泰国</li>
+                <li>日本</li>
+            </ul>
+
+            <p>点击后收藏</p>
+            <ul id="favourite">
+                <li><span>中故宫</span>&nbsp;x&nbsp;</li>
+            </ul>
+
+        </div>
+        <div id="box2">
+            <ul></ul>
+        </div>
+    </div>
+
+
+    <script>
+        var box1 = document.querySelector("#box1");
+        var ul1 = box1.querySelector("ul");
+        var favourite = document.getElementById("favourite");
+
+        var ul2 = document.querySelector("#box2>ul");
+
+        var newLi = document.createElement("li");
+        newLi.className = "fav";
+        var newF = document.createElement("span");
+
+
+        ul1.onclick = function(e){
+
+            var e = e || window.event;
+            var obj = e.target || e.srcElement;
+
+            if(obj.tagName.toLowerCase() === "li"){
+                if(!obj.flag){
+
+
+
+                var new_Li = newLi.cloneNode();
+                var new_F = newF.cloneNode();
+                new_F.innerText = obj.innerText + "|x";
+                new_Li.appendChild(new_F);
+
+                new_Li.onclick=function(){
+                    favourite.removeChild(this);
+                    obj.flag=false;
+                }
+
+                favourite.appendChild(new_Li);
+
+
+                ul2.appendChild(new_Li.cloneNode(true))
+                    obj.flag=true
+                }
+            }
+        }
+
+
+    </script>
+
+
+</body>
+</html>
