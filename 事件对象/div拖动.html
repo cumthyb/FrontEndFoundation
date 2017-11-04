@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        #box{
+            width:200px;
+            height:200px;
+            background-color:tomato;
+            position:absolute;
+            top:0;
+            left:0;
+        }
+        #box:hover{
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        var box = document.getElementById("box");
+
+        var inpress = false;
+        var mouseX, mouseY;
+        box.onmousedown = function(e){
+            e=e||window.event;
+
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            box.addEventListener("mousemove", move);
+
+        }
+
+        box.onmouseup = function(){
+            box.removeEventListener("mousemove", move)
+        }
+
+
+        var _top, _left;
+
+        function move(e){
+            _top = this.offsetTop;
+            _left = this.offsetLeft;
+            var dis_x=e.clientX- mouseX;
+            var dis_y=e.clientY-mouseY;
+            console.log(dis_x);
+            this.style.top = (_top + dis_y ) + "px";
+            this.style.left = (_left +dis_x) + "px";
+            mouseX=e.clientX;
+            mouseY=e.clientY;
+
+        }
+
+    </script>
+</body>
+</html>
