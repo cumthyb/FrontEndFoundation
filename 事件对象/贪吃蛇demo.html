@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+
+        body, div, p, input{
+            padding:0;
+            margin:0;
+        }
+
+        #box{
+            width:1410px;
+            height:1005px;
+            margin:50px auto;
+        }
+
+        #map{
+            width:1000px;
+            height:1000px;
+            background-color:#d1d5d3;
+            position:relative;
+            display:inline-block;
+        }
+        #panel{
+            width:400px;
+            height:1000px;
+            display:inline-block;
+            position:relative;
+            vertical-align:top;
+        }
+        #log{
+            width:100%;
+            height:90%;
+            background-color:#d1d5d3;
+            overflow:auto;
+        }
+        #panel .btn{
+            width:150px;
+            height:90px;
+            font-size:30px;
+            line-height:90px;
+            text-align:center;
+            margin:8px 20px;
+        }
+        #map .snake{
+            position:absolute;
+            background-color:blueviolet;
+        }
+        #map .food{
+            position:absolute;
+            background-color:#303ad2;
+        }
+        #map .head{
+            background-color:red;
+            z-index:999;
+        }
+        #socre{
+            font-size:50px;
+            line-height:100px;
+            padding-left:20px
+        }
+    </style>
+</head>
+<body>
+
+    <div id="box">   <div id="map"></div>
+        <div id="panel">
+            <div id="log"></div>
+            <p id="socre">累计分数:</p>
+        </div></div>
+
+
+    <script>
+
+
+        class Map {
+            constructor(width, heigth, size){
+                this.size = size;
+                this.Width = width;
+                this.Heigth = heigth;
+                this.MaxX = Math.floor(width / size);//
+                this.MaxY = Math.floor(heigth / size);
+            }
+
+            get Max_X(){
+                return this.MaxX;
+            }
+
+            get Max_Y(){
+                return this.MaxY;
+            }
+
+            get Size(){
+                return this.size;
+            }
+        }
+
+        class Food {
+            constructor(map, log, size, maxX, maxY, coord){
+                this.Map = map;
+                this.Size = size;
+                this.MaxX = maxX;
+                this.MaxY = maxY;
+                this.SetLog(log);
+                this.Coord = coord;
+            }
+
+            get GetFoodElement(){
+                return this.foodElement;
+            }
+
+            GenerateFood(){
+                var coordX = Math.floor(Math.random() * this.MaxX);
+                var coordY = Math.floor(Math.random() * this.MaxY);
+                var corrd = new Coordinates(this.Size);
+                this.Coord = [coordX, coordY];
+                var location = corrd.Coord2Loaction(this.Coord);
+                var food = document.createElement("div");
+                food.className = "food";
+                food.style.width = this.Size + "px";
+                food.style.height = this.Size + "px";
+                food.style.left = location[0] + "px";
+                food.style.top = location[1] + "px";
+                this.foodElement = food;
+                this.Map.appendChild(food);
+                if(this.console){
+                    this.console.Log(`生成Food ${coordX}_${coordY}`);
+                }
+            }
+
+            SetLog(log){
+                if(!log){
+                    this.console = new Console(_log)
+                }
+                else {
+                    this.console = log;
+                }
+
+            }
+
+        }
+
+        class Snake {
+            constructor(container, oriLenth, size, console){
+                this.container = container;
+                this.snake = [];
+                this.size = size;
+                this.HeadCorrd = [1, oriLenth];
+                this.Console = console;
+                this.Score=0;
+                this.InitSnake(oriLenth);
+            }
+
+            get Head(){
+                return this.snake[0];
+            }
+
+            get Tail(){
+                return this.snake[this.Length - 1];
+            }
+
+            get Length(){
+                return this.snake.length;
+            }
+
+            set SetDirection(direction){
+                this.direct = direction;
+            }
+
+            set SetFood(food){
+                this.food = food;
+            }
+
+            get GetScore()
+            {
+                return this.Score;
+            }
+
+            CheckHeadCoord(){
+                if(this.HeadCorrd[0] === -1 ||
+                    this.HeadCorrd[0] === _map.Max_X ||
+                    this.HeadCorrd[1] === -1 ||
+                    this.HeadCorrd[1] === _map.Max_Y){
+                    document.onkeydown = null;
+                    return false;
+                }
+                else
+
+                    return true;
+            }
+
+            InitSnake(length){
+                var node;
+                for(var i = 0; i < length; i++){
+                    node = this.AddNode();
+                    node.style.left = i * this.size + "px";
+                    node.style.top = 0;
+                    this.snake.push(node);
+                    this.container.appendChild(node);
+                }
+                this.snake.reverse();
+                this.snake[0].className += " head";
+            }
+
+            AddNode(){
+                var node = document.createElement("div");
+                node.style.width = this.size + 'px';
+                node.style.height = this.size + 'px';
+                node.className = 'snake';
+                return node;
+            }
+
+            Move(){
+
+                if(!this.direct){
+                    return;
+                }
+                //移动头部
+
+                var headCoord = [this.Head.style.top, this.Head.style.left];
+                var target;
+                var flag = true;
+                switch(this.direct){
+                    case 37:
+                        this.direct = 'left';
+                        if(this.CheckHeadCoord()){
+                            target = this.Head.offsetLeft - this.size;
+                            if(target >= 0){
+                                this.Head.style.left = target + "px"
+                            }
+                            this.HeadCorrd[1]--;
+                        }
+                        else flag = false;
+                        break;
+                    case 38:
+                        this.direct = 'up';
+                        if(this.CheckHeadCoord()){
+                            target = this.Head.offsetTop - this.size;
+                            if(target >= 0){
+                                this.Head.style.top = target + "px"
+                            }
+                            this.HeadCorrd[0]--;
+                        }
+                        else flag = false;
+                        break;
+                    case 39:
+                        this.direct = 'right';
+                        if(this.CheckHeadCoord()){
+                            target = this.Head.offsetLeft + this.size;
+                            if(target < _map.Width){
+                                this.Head.style.left = target + "px"
+                            }
+                            this.HeadCorrd[1]++;
+                        }
+
+                        else flag = false;
+                        break;
+                    case 40:
+                        this.direct = 'down';
+                        if(this.CheckHeadCoord()){
+                            target = this.Head.offsetTop + this.size;
+                            if(target < _map.Width){
+                                this.Head.style.top = target + "px"
+                            }
+                            this.HeadCorrd[0]++;
+                        }
+
+                        else flag = false;
+                        break;
+
+                }
+
+                if(flag){
+                    this.Tail.style.top = headCoord[0];
+                    this.Tail.style.left = headCoord[1];
+                    this.snake.splice(1, 0, this.Tail);
+                    this.snake.pop();
+                    this.Eate();
+                }
+
+                else {
+                    this.Console.Log("撞了南墙，游戏结束")
+                }
+//                this.Console.Log(`${this.HeadCorrd[0]}_${this.HeadCorrd[1]}`);
+                //移动尾部
+            }
+
+
+            Eate(){
+                if(this.food.Coord[1]+1 === this.HeadCorrd[0] &&
+                    this.food.Coord[0] +1=== this.HeadCorrd[1]){
+                    this.food.foodElement.className = "snake";
+                    this.snake.push(this.food.foodElement);
+                    this.container.appendChild(this.food.foodElement);
+
+                    this.Console.Log(`累计分数:${this.Score++}`);
+
+                    var food = new Food(this.container, this.Console, _map.Size, _map.Max_X, _map.Max_Y);
+
+
+                    food.GenerateFood();
+                    this.food = food;
+                }
+
+
+            }
+
+
+        }
+
+        class Console {
+            constructor(element, logStr){
+                this.Element = element;
+                this.Log(logStr);
+            }
+
+            Log(logStr){
+                if(logStr){
+                    var log = document.createElement("p");
+                    log.className += ' log';
+                    log.innerText = logStr;
+                    this.Element.appendChild(log);
+                }
+
+            }
+        }
+
+        class Coordinates {
+            constructor(size){
+                this.Size = size;//单个色块的大小 一个格网的大小
+            }
+
+            Coord2Loaction(coord){
+                return [coord[0] * this.Size, coord[1] * this.Size];
+            }
+        }
+
+        function Init(){
+            InitMap();
+            InitLog();
+            InitSnake();
+            InitFood();
+        }
+
+
+        var _mapContainer = document.getElementById("map");
+        var _log = document.getElementById("log");
+
+        var _score=document.getElementById("socre");
+        var _map = new Map(1000, 1000, 25);
+        var _console = new Console(_log);
+
+        var _food = new Food(_mapContainer, _console, _map.Size, _map.Max_X, _map.Max_Y);
+        _food.GenerateFood();
+
+        var _timer;
+
+        var _snake = new Snake(_mapContainer, 8, _map.Size, _console);
+
+        _snake.SetFood = _food;
+        _timer = setInterval(_snake.Move, 1000);
+
+        setInterval(function(){
+            _score.innerText="累计分数:"+_snake.GetScore;
+        },500);
+        document.onkeydown = function(){
+
+            var code;
+            if(window.event){
+                code = window.event.keyCode;
+            } else {
+                code = event.keyCode;
+            }
+            _snake.SetDirection = code;
+            _snake.Move();
+
+        }
+
+        document.onkeyup = function(){
+            _snake.SetDirection = null;
+            clearInterval(_timer);
+        }
+    </script>
+
+
+</body>
+</html>
