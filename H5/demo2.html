@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        div,p,ul,li,img{
+            padding:0;
+            margin:0;
+        }
+        #box{
+            position:relative;
+            width:800px;
+            height:600px;
+            margin:50px auto;
+            /*background-color:#eeeeee;*/
+        }
+        p{
+            width:100%;
+            height:50px;
+            line-height:50px;
+            text-align:center;
+            font-size:30px;
+        }
+        ul{
+            width:100%;
+            display:flex;
+            position:absolute;
+            bottom:-40px;
+        }
+        li{
+            flex:1;
+            float:left;
+            list-style:none;
+            background-color:#ff6600;
+            color:white;
+            height:40px;
+            line-height:40px;
+            text-align:center;
+            margin:0 50px;
+            cursor:pointer;
+        }
+
+        li:nth-child(2){
+            background-color:transparent;
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <p>NIhoa</p>
+        <img src="" alt="" title="" width="800px">
+        <ul>
+            <li id="pre">上一张</li>
+            <li><input type="file" multiple/></li>
+            <li id="next">下一张</li>
+        </ul>
+    </div>
+
+
+    <script>
+
+        var next=document.getElementById("next");
+        var pre=document.getElementById("pre");
+        var btn=document.querySelector("#box input");
+        var title=document.querySelector("#box p");
+        var img=document.querySelector("#box img");
+
+        var files;
+        var curretImg=0;
+
+        function GetFiles(e){
+            files = this.files;
+        }
+
+        btn.addEventListener("change",GetFiles);
+
+
+
+        function ShowIMG(file){
+            title.innerText=file.name;
+
+            var reader = new FileReader();
+            reader.onload = (function(file){
+                return function(){
+                   img.src= this.result ;
+                };
+            })(file);
+            //读取文件内容
+            reader.readAsDataURL(file);
+        }
+
+        pre.onclick=function(){
+            if(curretImg){
+                ShowIMG(files[--curretImg]);
+            }
+        }
+        next.onclick=function(){
+            if(curretImg<files.length){
+                ShowIMG(files[curretImg++]);
+            }
+        }
+
+    </script>
+</body>
+</html>

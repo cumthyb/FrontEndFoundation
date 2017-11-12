@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+</head>
+<body>
+
+    <input type="file" id="btn" multiple/>
+    <div id="preview2"></div>
+    <script>
+
+
+        function fileSelect2(e){
+            e = e || window.event;
+            var files = this.files;
+            var preview = document.getElementById('preview2');
+
+            for(var i = 0, f; f = files[i]; i++){
+                var reader = new FileReader();
+                reader.onload = (function(file){
+                    return function(e){
+                        var span = document.createElement('span');
+                        span.innerHTML = '<img width="100" src="' + this.result + '" alt="' + file.name + ' "  title="' + file.name + ' " />';
+
+                        preview.insertBefore(span, null);
+                    };
+                })(f);
+                //读取文件内容
+                reader.readAsDataURL(f);
+            }
+        }
+
+        document.getElementById('btn').addEventListener('change', fileSelect2, false);
+
+
+    </script>
+</body>
+</html>
