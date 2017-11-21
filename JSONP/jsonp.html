@@ -26,6 +26,7 @@
             border-left:solid 1px;
             border-right:solid 1px;
             padding: 5px;
+            user-select:none;
         }
 
         #result li:hover{
@@ -88,14 +89,33 @@
     <script>
 
         var search=document.getElementById("search");
+        var results=document.getElementById("result");
+        var li=document.createElement("li");
 
-        search.onmouseup=function(){
-            var item=this.value;
-
+        search.onkeyup=function(){
+            console.log(1);
+            var val=this.value;
+            var s=document.createElement("script");
+            s.src=`https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=${val}&cb=query`;
+            document.body.appendChild(s);
 
 
         }
 
+        function query(json){
+            [].forEach.call(results.childNodes,item=>results.removeChild(item));
+            json.s.forEach(r=>{
+                var liClone=li.cloneNode();
+                liClone.innerText=r;
+                results.appendChild(liClone);
+            });
+        }
+
+        results.onclick=function(event){
+            if(event.target.tagName.toUpperCase()==="LI"){
+                search.value=event.target.innerText;
+            }
+        }
 
     </script>
 
