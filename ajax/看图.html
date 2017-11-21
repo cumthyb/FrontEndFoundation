@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+
+        body{
+            display:flex;
+            height:900px;
+        }
+        #nav{
+            flex:1;
+        }
+        #pages{
+            width:300px;
+            height:40px;
+        }
+        ul{
+            padding-left:0;
+        }
+        #items > li{
+            list-style:none;
+            margin:5px 0;
+            background-color:#ff6600;
+            color:whitesmoke;
+            cursor:pointer;
+            height:30px;
+            line-height:30px;
+            text-align:left;
+            width:80%;
+        }
+        #panel{
+            flex:4;
+            /*background-color:#303ad2;*/
+        }
+    </style>
+</head>
+<body>
+
+    <input type="button" id="getReady"/>
+    <div id="nav">
+        <select name="" id="pages">
+            <option value="" selected="selected">请选择浏览页</option>
+            <!--<option value="">2</option>-->
+            <!--<option value="">3</option>-->
+            <!--<option value="">4</option>-->
+        </select>
+        <ul id="items">
+            <!--<li>kjk</li>-->
+            <!--<li>kjk</li>-->
+        </ul>
+    </div>
+
+    <div id="panel">
+        <img src="" alt="" id="image">
+    </div>
+
+    <script>
+
+        var getReady = document.getElementById("getReady");
+        var pages = document.getElementById("pages");
+        var items = document.getElementById("items");
+        var image = document.getElementById("image");
+        var imgs = [];
+        var page;
+        getReady.onclick = function(){
+            var xhr = new XMLHttpRequest();
+            var url = "https://route.showapi.com/341-2?maxResult=20&page=1&showapi_appid=50430&showapi_sign=d347575d317844cba2436be868c4561b"
+            xhr.open("get", url);
+            xhr.send();
+            xhr.onreadystatechange = function(){
+                var status = this.status;
+                var json;
+                if(this.readyState == 4){
+                    if(status >= 200 && status < 300){
+                        var json = JSON.parse(this.responseText);
+                        InitPages(json);
+                    }
+                }
+            }
+        }
+
+        function InitPages(json){
+            var allCount = parseInt(json["showapi_res_body"]["allPages"]);
+            var newpageModel = document.createElement("option");
+            newpageModel.className = "page";
+            for(var i = 0; i < allCount; i++){
+                var newPage = newpageModel.cloneNode();
+                newPage.value = i + 1;
+                newPage.innerText = i + 1;
+                pages.appendChild(newPage);
+            }
+        }
+
+        pages.onchange = function(event){
+            var selected = event.target.value;
+            var xhr = new XMLHttpRequest();
+            var url = `https://route.showapi.com/341-2?maxResult=20&page=${selected}&showapi_appid=50430&showapi_sign=d347575d317844cba2436be868c4561b`;
+            xhr.open("get", url);
+            xhr.send();
+            xhr.onreadystatechange = function(){
+                var status = this.status;
+                var json;
+                if(this.readyState == 4){
+                    if(status >= 200 && status < 300){
+                        var json = JSON.parse(this.responseText);
+                        InitItems(json);
+                    }
+                }
+            }
+        }
+
+        function InitItems(json){
+
+            [].forEach.call(items.childNodes, c => items.removeChild(c));
+            imgs = [];
+            var i = 0;
+            var pageItems = json["showapi_res_body"]["contentlist"];
+            var newItemModel = document.createElement("li");
+            newItemModel.className = "item";
+            pageItems.forEach(item =>{
+                var newItem = newItemModel.cloneNode();
+                newItem.innerText = item.title;
+                newItem.value = i;
+                imgs.push(item.img);
+                items.appendChild(newItem);
+                i++;
+            }, this);
+
+        }
+
+        items.onclick = function(event){
+            if(event.target.tagName.toUpperCase() === "LI"){
+                image.src = imgs[event.target.value];
+            }
+        }
+
+    </script>
+</body>
+</html>
