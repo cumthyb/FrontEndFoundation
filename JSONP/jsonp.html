@@ -98,7 +98,13 @@
             var s=document.createElement("script");
             s.src=`https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=${val}&cb=query`;
             document.body.appendChild(s);
+            s.onload=function(){
+                document.body.removeChild(s)
+            }
 
+            if(event.keyCode===13){
+                window.open(`https://www.baidu.com/s?&wd=${this.value}`)
+            }
 
         }
 
@@ -116,6 +122,8 @@
                 search.value=event.target.innerText;
             }
         }
+
+
 
     </script>
 
