@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        body,ul,li,div,img{
+            padidng:0;
+            margin: 0 ;
+        }
+        li{
+            list-style:none;
+        }
+        #box{
+            position:relative;
+            width:780px;
+            height:330px;
+            margin:50px auto;
+        }
+        .pics{
+            height:100%;
+            width:100%;
+        }
+        .pics>ul{
+            height:100%;
+            width:100%;
+            position:relative;
+        }
+        .pics>ul>li{
+            height:100%;
+            width:100%;
+            position:absolute;
+            left:0;
+            top:0;
+            display:none;
+        }
+        .pics>ul>li.on{
+            display:block;
+        }
+
+        .btns{
+            position:absolute;
+            width:140px;
+            height:21px;
+            left:50%;
+            /*transform:translateX(-50%);*/
+            margin-left:-70px;
+            bottom:20px;
+            background-color: lightgray;
+            opacity:0.8;
+            border-radius:5px;
+        }
+        .btns>ul{
+            height:100%;
+            width:100%;
+            padding-left:5px;
+        }
+        .btns>ul>li{
+            /*position:absolute;*/
+            width:15px;
+            height:15px;
+            float:left;
+            background-color:white;
+            border-radius:50%;
+            margin:3px 5px;
+            cursor:pointer;
+        }
+        .btns>ul>li.on{
+            background-color:red;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div class="pics">
+            <ul>
+                <li class="on"><img src="imgs/1.jpg" alt=""></li>
+                <li class=""><img src="imgs/2.jpg" alt=""></li>
+                <li class=""><img src="imgs/3.jpg" alt=""></li>
+                <li class=""><img src="imgs/4.jpg" alt=""></li>
+                <li class=""><img src="imgs/5.jpg" alt=""></li>
+            </ul>
+        </div>
+        <div class="btns">
+            <ul>
+                <li value=1 class="on"></li>
+                <li value=2 class=""></li>
+                <li value=3 class=""></li>
+                <li value=4 class=""></li>
+                <li value=5 class=""></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+
+        function Player(pics,btns){
+            this.pics=pics;
+            this.btns=btns;
+            this.count=btns.length;
+            this.current=0;
+        }
+        
+        Player.prototype.Init=function(){
+            var This=this;
+            this.pics[this.current].className="on";
+            this.btns[this.current].className="on";
+            this.btns[0].parentNode.onclick=function(e){
+                if(e.target.tagName.toUpperCase()==="LI"){
+                    This.ShowCurrent(e.target.value-1);
+                }
+            }
+        }
+
+        Player.prototype.ShowCurrent=function(current){
+
+            this.pics[this.current].className="";
+            this.btns[this.current].className="";
+            this.current=parseInt(current);
+            this.pics[this.current].className="on";
+            this.btns[this.current].className="on";
+        }
+
+        var pics=document.querySelectorAll(".pics li");
+        var btns=document.querySelectorAll(".btns li");
+
+        var player=new Player(pics,btns);
+        player.Init();
+
+    </script>
+
+
+</body>
+</html>
