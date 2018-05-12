@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        table{
+            border-collapse:collapse;
+            margin:50px auto;
+        }
+        td{
+            width:100px;
+            height:30px;
+            line-height:30px;
+            text-align:center;
+        }
+        a{
+            text-decoration:none;
+        }
+        tr > .del:hover{
+            color:red;
+            cursor:pointer;
+        }
+        tbody>tr:nth-child(2n+1){
+            background-color: aliceblue;
+        }
+        tbody>tr:nth-child(2n){
+            background-color:#37c2fb;
+        }
+        #foot{
+            width:100%;
+            height:30px;
+        }
+        #foot ul{
+            width:50%;
+            height:100%;
+            float:right;
+        }
+        li{
+            list-style:none;
+            float:left;
+            height:30px;
+
+            padding:0 10px;
+            line-height:30px;
+            text-align:center;
+            margin-right:10px;
+            background-color:darksalmon;
+            color:white;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>选择</td>
+                <td>姓名</td>
+                <td>ID</td>
+                <td>积分</td>
+                <td>删除</td>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>aa</td>
+                <td>1</td>
+                <td>1</td>
+                <td class="del">删除</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>bb</td>
+                <td>2</td>
+                <td>2</td>
+                <td class="del">删除</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>cc</td>
+                <td>3</td>
+                <td>3</td>
+                <td class="del">删除</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="foot">
+        <ul>
+            <li>全选</li>
+            <li>反选</li>
+            <li>全不选</li>
+            <li>添加</li>
+            <li>删除</li>
+        </ul>
+    </div>
+
+    <script>
+        function BindEvent(){
+            
+        }
+
+    </script>
+
+</body>
+</html>

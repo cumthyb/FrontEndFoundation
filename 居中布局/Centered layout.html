@@ -2,22 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Centered layout</title>
     <script src=""></script>
 
     <style>
+        body{
+            padding: 0;
+            margin:0;
+        }
         #parent{
             height:200px;
             width:400px;
             border:1px solid red;
             /*line-height:200px;*/
-            text-align:center;
-            vertical-align:text-bottom;
+            /*text-align:center;*/
+            vertical-align:middle;
+            display:table-cell;
         }
-        img{
-            vertical-align:text-bottom;
-        }
-
 
     </style>
 
@@ -25,8 +26,11 @@
 </head>
 <body>
     <div id="parent">
-        <!--我欲乘风归去，又恐琼楼玉宇，高处不胜寒 -->
-        <img src="imgs/dog.jpg" alt="" height="120px" width="200px">
+        <span> </span>
+            我欲乘风归去，又恐琼楼玉宇，高处不胜寒.
+            青青园中葵，朝露待日晞。阳春布德泽，万物生光辉.
+
+        <!--<img src="imgs/dog.jpg" alt="" height="120px" width="200px">-->
     </div>
 </body>
 </html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" onselectstart="return false">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+    <style>
+        body, div, ul, li, p{
+            margin:0;
+            padding:0px;
+        }
+        body{
+            background-color:black;
+        }
+        #box{
+            width:300px;
+            height:500px;
+            margin:50px auto;
+            border:10px solid white;
+        }
+        #panel{
+            width:100%;
+            height:100%;
+            position:relative;
+            color:white;
+        }
+        #panel p{
+            padding:30px;
+            font-size:35px;
+            line-height:50px;
+            text-align:center;
+        }
+        #panel li{
+            list-style:none;
+            width:150px;
+            height:30px;
+            text-align:center;
+            margin:53px auto;
+            background-color:white;
+            color:black;
+            line-height:30px;
+            font-size:25px;
+            cursor:pointer;
+        }
+        #panel img{
+            position:absolute;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="panel">
+
+        </div>
+    </div>
+    <script>
+
+        (function(){
+            var box = document.getElementById("box");
+            var panel = document.getElementById("panel");
+            var level = [{"简单" : 100}, {"中级" : 300}, {"困难" : 1000}, {"圣人" : 16}];
+            var level = [
+                {"speed" : 100, diff : "简单"},
+                {"speed" : 300, diff : "中级"},
+                {"speed" : 1000, diff : "困难"},
+                {"speed" : 16, diff : "圣人"}];
+            var army;
+
+            initPanel();
+
+            function initPanel(){
+                var title = document.createElement("p");
+                title.innerText = "Aircraft Wars";
+                panel.appendChild(title);
+
+                var btns = document.createElement("ul");
+
+                var li = document.createElement("li");
+
+
+                for(var i = 0; i < 4; i++){
+                    var btn = li.cloneNode(false);
+                    btn.innerText = level[i]["diff"];
+                    btn.speed = level[i]["speed"];
+                    btn.addEventListener("click", createBattlefield);
+                    btns.appendChild(btn);
+                }
+                panel.appendChild(btns);
+            }
+
+            function createBattlefield(){
+                panel.innerHTML = null;
+
+                army = new Plane("army", 60, 36, 0, 0, "imgs/plane.png",this.speed);
+                army.move(464, 60);
+                army.fire();
+                //获取等级
+                // 产生我军
+                // 产生敌军
+            }
+
+
+            function Plane(name, width, height, top, left, src, speed){
+                this.name = name;
+                this.speed = speed;
+                this.src = src;
+                this.height = height;
+                this.width = width;
+                this.top = top;
+                this.left = left;
+                this.leftMax = box.offsetWidth - this.width;
+                this.topMax = box.offsetHeight - this.height;
+                this.leftMin = -this.width / 2;
+
+            }
+
+            Plane.prototype.fire=function(){
+                var That = this;
+
+                function createBullet(){
+                    //                        if(!That.bullet){
+                    var left = That.Element.offsetLeft + That.width / 2;
+                    var top = That.Element.offsetTop;
+                    That.bullet = new Bullet(top, left, 100, "imgs/bullet.png");
+                    //                        }
+                    That.bullet.move();
+                }
+
+                setInterval(createBullet, That.speed);
+            }
+
+            Plane.prototype.move = function(top, left){
+                if(!this.Element){
+                    this.Element = new Image();
+                    this.Element.src = this.src;
+                    this.Element.width = this.width;
+                    this.Element.height = this.height;
+                    panel.appendChild(this.Element);
+                }
+                this.Element.style.top = top + "px";
+                this.Element.style.left = left + "px";
+
+                var That = this;
+                document.onmousemove = function(e){
+                    if(That){
+                        var left = e.pageX - box.offsetLeft - That.width / 2,
+                            top = e.pageY - box.offsetTop - That.height / 2;
+                        //限定我军的活动范围（边界）
+                        left = Math.min(That.leftMax, left);
+                        left = Math.max(That.leftMin, left);
+                        top = Math.min(That.topMax, top);
+                        top = Math.max(0, top);
+                        That.Element.style.left = left + "px";
+                        That.Element.style.top = top + "px";
+                    }
+                };
+            }
+
+            Plane.prototype.blowUp=function(){
+                
+            }
+
+            function Bullet(top, left, speed, src){
+                this.speed = speed;
+                this.src = src;
+                this.Element = new Image();
+                this.Element.src = src;
+                this.Element.className = 'bullet';
+                this.height = 22;
+                this.width = 6;
+                this.Element.width = this.width;
+                this.Element.height = this.height;
+                this.Element.style.left = left - this.Element.width / 2 + "px";
+                this.Element.style.top = top + "px";
+                panel.appendChild(this.Element);
+            }
+
+            Bullet.prototype.move = function(){
+                var That = this;
+                bulletMove();
+
+                function bulletMove(){
+                    var top = That.Element.offsetTop;
+                    if(top <= -That.height){
+                        panel.removeChild(That.Element);
+                    }
+                    else {
+                        That.Element.style.top = top - 12 + "px";
+                        requestAnimationFrame(bulletMove);
+                    }
+
+                }
+            }
+
+
+        }())
+
+
+    </script>
+</body>
+</html>

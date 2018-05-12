@@ -10,13 +10,11 @@
             padding:0;
             margin:0;
         }
-
         #box{
             width:1410px;
             height:1005px;
             margin:50px auto;
         }
-
         #map{
             width:1000px;
             height:1000px;
@@ -66,11 +64,13 @@
 </head>
 <body>
 
-    <div id="box">   <div id="map"></div>
+    <div id="box">
+        <div id="map"></div>
         <div id="panel">
             <div id="log"></div>
             <p id="socre">累计分数:</p>
-        </div></div>
+        </div>
+    </div>
 
 
     <script>
@@ -150,7 +150,7 @@
                 this.size = size;
                 this.HeadCorrd = [1, oriLenth];
                 this.Console = console;
-                this.Score=0;
+                this.Score = 0;
                 this.InitSnake(oriLenth);
             }
 
@@ -174,8 +174,7 @@
                 this.food = food;
             }
 
-            get GetScore()
-            {
+            get GetScore(){
                 return this.Score;
             }
 
@@ -284,14 +283,14 @@
                 else {
                     this.Console.Log("撞了南墙，游戏结束")
                 }
-//                this.Console.Log(`${this.HeadCorrd[0]}_${this.HeadCorrd[1]}`);
+                //                this.Console.Log(`${this.HeadCorrd[0]}_${this.HeadCorrd[1]}`);
                 //移动尾部
             }
 
 
             Eate(){
-                if(this.food.Coord[1]+1 === this.HeadCorrd[0] &&
-                    this.food.Coord[0] +1=== this.HeadCorrd[1]){
+                if(this.food.Coord[1] + 1 === this.HeadCorrd[0] &&
+                    this.food.Coord[0] + 1 === this.HeadCorrd[1]){
                     this.food.foodElement.className = "snake";
                     this.snake.push(this.food.foodElement);
                     this.container.appendChild(this.food.foodElement);
@@ -338,19 +337,12 @@
             }
         }
 
-        function Init(){
-            InitMap();
-            InitLog();
-            InitSnake();
-            InitFood();
-        }
-
 
         var _mapContainer = document.getElementById("map");
         var _log = document.getElementById("log");
 
-        var _score=document.getElementById("socre");
-        var _map = new Map(1000, 1000, 25);
+        var _score = document.getElementById("socre");
+        var _map = new Map(1000, 1000, 40);
         var _console = new Console(_log);
 
         var _food = new Food(_mapContainer, _console, _map.Size, _map.Max_X, _map.Max_Y);
@@ -364,8 +356,8 @@
         _timer = setInterval(_snake.Move, 1000);
 
         setInterval(function(){
-            _score.innerText="累计分数:"+_snake.GetScore;
-        },500);
+            _score.innerText = "累计分数:" + _snake.GetScore;
+        }, 500);
         document.onkeydown = function(){
 
             var code;

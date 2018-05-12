@@ -17,7 +17,6 @@
             background-color:green;
             top:0;
             left:0;
-
         }
     </style>
 
@@ -51,8 +50,8 @@
                 newBall.style.top = Math.random() * 800 + "px";
                 newBall.style.backgroundColor = getRandomColor();
                 newBall.className += ` B_${i + 1}`;
-                newBall.speedTop=Math.random()*20;
-                newBall.speedLeft=Math.random()*20;
+                newBall.speedTop = Math.random() * 20;
+                newBall.speedLeft = Math.random() * 20;
                 container.appendChild(newBall);
             }
         }
@@ -66,8 +65,8 @@
             [].forEach.call(balls, function(ba){
 
 
-                speedTop=ba.speedTop;
-                speedLeft=ba.speedLeft;
+                speedTop = ba.speedTop;
+                speedLeft = ba.speedLeft;
                 var MaxLeft = document.documentElement.clientWidth - ba.clientWidth;
                 var MaxTop = document.documentElement.clientHeight - ba.clientHeight;
                 var top_ori = ba.offsetTop;
@@ -80,14 +79,14 @@
                     speedTop = speedTop * (-1);
                     target_top = top_ori + speedTop;
                     target_top = Math.min(MaxTop, target_top)
-                    ba.style.backgroundColor=getRandomColor();
+                    ba.style.backgroundColor = getRandomColor();
 
                 }
                 if(target_top <= 0){
                     speedTop = speedTop * (-1);
                     target_top = top_ori + speedTop;
                     target_top = Math.max(0, target_top)
-                    ba.style.backgroundColor=getRandomColor();
+                    ba.style.backgroundColor = getRandomColor();
 
                 }
 
@@ -95,14 +94,14 @@
                     speedLeft = speedLeft * (-1);
                     target_left = left_ori + speedLeft;
                     target_left = Math.min(MaxLeft, target_left);
-                    ba.style.backgroundColor=getRandomColor();
+                    ba.style.backgroundColor = getRandomColor();
 
                 }
                 if(target_left <= 0){
                     speedLeft = speedLeft * (-1);
                     target_left = left_ori + speedLeft;
                     target_left = Math.max(0, target_left)
-                    ba.style.backgroundColor=getRandomColor();
+                    ba.style.backgroundColor = getRandomColor();
 
                 }
 
@@ -110,14 +109,14 @@
                 ba.style.top = target_top + "px";
 
                 ba.style.left = target_left + "px";
-                ba.speedTop=speedTop;
-                ba.speedLeft=speedLeft;
+                ba.speedTop = speedTop;
+                ba.speedLeft = speedLeft;
 
             });
             requestAnimationFrame(autoMove);
         }
 
-        init(50);
+        init(15);
 
         autoMove();
     </script>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=""></script>
+</head>
+<body>
+    <script>
+//        if(document.cookie){
+            var now=new Date().toUTCString();
+            var expires=new Date( new Date().getTime()+24*60*60*1000).toUTCString();
+            document.cookie=`lasttime=${now};expires=${expires}`;
+//        }
+
+
+var myReg = /(\w+)\s(\w+)/;
+var str  = "John Smith";
+var newstr = str.replace(myReg, "$2, $1");
+document.write(newstr);
+
+    </script>
+</body>
+</html>

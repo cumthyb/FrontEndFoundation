@@ -12,12 +12,15 @@
             width:200px;
             height:200px;
             background-color:red;
+            opacity:1;
         }
     </style>
 </head>
 <body>
     <div id="box"></div>
     <script>
+
+
         window.requestAnimationFrame = window.requestAnimationFrame ||
             function(fn){
                 return window.setTimeout(fn);
@@ -33,8 +36,11 @@
         var styles=box.currentStyle||window.getComputedStyle(box);
 
         var end={
-            width:1000,
-            height:800
+            width:200,
+            height:800,
+            top:200,
+            left:800,
+            opacity:0.01
         }
         var move={};
 
@@ -43,7 +49,10 @@
             pair["start"]=parseFloat(styles[key]) ;
             pair["end"]=parseFloat( end[key]);
             pair["s"]=pair["end"]-pair["start"];
-            move[key]=pair;
+            if(pair['s']!=0){
+                move[key]=pair;
+            }
+
         }
 
         console.log(move);
@@ -68,6 +77,10 @@
                 
                 for (var key in move) {
                     currentVal=roti*move[key]['s']+move[key]['start'];
+                    if(key==="opacity"){
+                        obj.style[key]=currentVal;
+                    }
+                    else
                     obj.style[key]=currentVal+"px";
                     console.log(`${key}:${currentVal}`);
                 }

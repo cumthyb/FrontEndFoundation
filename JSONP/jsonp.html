@@ -99,7 +99,7 @@
             s.src=`https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=${val}&cb=query`;
             document.body.appendChild(s);
             s.onload=function(){
-                document.body.removeChild(s)
+//                document.body.removeChild(s)
             }
 
             if(event.keyCode===13){
@@ -123,7 +123,17 @@
             }
         }
 
-
+        function Fn(name,age){
+            this.name=name;
+            this.age=age;
+        };
+        var fn=new Fn("kk",56);
+        Fn.prototype.say=function(){
+            
+        }
+        console.log(Fn.prototype)
+        console.log(fn.prototype);
+        console.log(fn.__proto__);
 
     </script>
 
